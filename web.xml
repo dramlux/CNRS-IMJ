@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This web.xml file is not required when using Servlet 3.0 container,
+see implementation details http://jersey.java.net/nonav/documentation/latest/jax-rs.html -->
+<web-app
+  xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+  version="3.1"
+  >
+    <display-name>Enccre - webservices frontal</display-name>
+    <servlet>
+        <servlet-name>Enccre - webservices frontal</servlet-name>
+        <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+        <init-param>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>fr.enccre.ws</param-value>
+        </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.classnames</param-name>
+            <param-value>org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
+        </init-param>        
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Enccre - webservices frontal</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+    
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    
+    <security-role>
+        <role-name>enccre-lecteur</role-name>
+    </security-role>
+    <security-role>
+        <role-name>enccre-editeur</role-name>
+    </security-role>
+    <security-role>
+        <role-name>enccre-relecteur</role-name>
+    </security-role>
+    <security-role>
+        <role-name>enccre-admin</role-name>
+    </security-role>    
+    <security-role>
+        <role-name>enccre-superreviewer</role-name>
+    </security-role>    
+    <security-role>
+        <role-name>enccre-dev</role-name>
+    </security-role>    
+   
+    <security-constraint>
+        <display-name>Lecteur</display-name>
+
+        <web-resource-collection>
+            <web-resource-name>Consultation Ressources</web-resource-name>
+            <url-pattern>/api/volumes</url-pattern>
+            <url-pattern>/api/volumes/toc</url-pattern>
+            <url-pattern>/api/volumes/search</url-pattern>
+            <url-pattern>/api/volume/*</url-pattern>
+            <url-pattern>/api/section/*</url-pattern>
+            <url-pattern>/api/contributeurs</url-pattern>
+            <url-pattern>/api/contributeur/*</url-pattern>
+            <url-pattern>/api/oeuvres</url-pattern>
+            <url-pattern>/api/oeuvre/*</url-pattern>
+            <url-pattern>/api/etudes/*</url-pattern>
+            <url-pattern>/api/etude/*</url-pattern> 
+            <url-pattern>/api/domaines</url-pattern>
+            <url-pattern>/api/normdesgns</url-pattern>
+            <url-pattern>/api/domaine/*</url-pattern>
+
+            <url-pattern>/api/article/*</url-pattern>
+            <url-pattern>/api/articles/search</url-pattern>
+            <url-pattern>/api/page/*</url-pattern>
+            <url-pattern>/api/explic/*</url-pattern>
+            <url-pattern>/api/planche/*</url-pattern>
+
+            <url-pattern>/api/dossiers/*</url-pattern>
+            <url-pattern>/api/dossier/*</url-pattern>
+            
+            <url-pattern>/api/affectations/</url-pattern>
+            <url-pattern>/api/dtaffectations/</url-pattern>            
+
+            <url-pattern>/api/publications/*</url-pattern>   
+            <http-method>GET</http-method>
+        </web-resource-collection>
+
+        <auth-constraint>
+            <role-name>enccre-lecteur</role-name>
+        </auth-constraint>
+        
+    </security-constraint>
+            
+    <security-constraint>
+        <display-name>Editeur</display-name>
+
+        <web-resource-collection>
+            <web-resource-name>Edition Ressources</web-resource-name>
+
+            <url-pattern>/api/earticle/*</url-pattern>
+            <url-pattern>/api/edossier/*</url-pattern>
+
+            <url-pattern>/api/affectation/*</url-pattern>
+            <url-pattern>/api/dtaffectation/*</url-pattern>
+
+            <url-pattern>/api/entree/*</url-pattern>
+            <url-pattern>/api/appcrit/*</url-pattern>
+
+            <url-pattern>/api/etudes/*</url-pattern>
+            <url-pattern>/api/oeuvres/*</url-pattern>
+            
+            <url-pattern>/api/media/*</url-pattern>            
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+
+        <auth-constraint>
+            <role-name>enccre-editeur</role-name>
+        </auth-constraint>
+        
+    </security-constraint>
+    
+    <security-constraint>
+        <display-name>Admin</display-name>
+        <web-resource-collection>
+            <web-resource-name>Admin Ressources</web-resource-name>
+            <url-pattern>/api/editeurs/</url-pattern>
+            <url-pattern>/api/editeur/*</url-pattern>
+            
+            <url-pattern>/api/affectations/</url-pattern>
+            <url-pattern>/api/dtaffectations/</url-pattern>     
+            
+            <url-pattern>/api/affectations/all</url-pattern>
+            <url-pattern>/api/dtaffectations/all</url-pattern>
+            <url-pattern>/api/affectation/*</url-pattern>
+            <url-pattern>/api/dtaffectation/*</url-pattern>
+            
+            <!-- debut ajout -->
+
+
+            <url-pattern>/api/contributeured/*</url-pattern>
+            <url-pattern>/api/Contribedit/*</url-pattern>
+            <url-pattern>/api/contributeured/All</url-pattern>
+            <url-pattern>/api/Contribedit/All</url-pattern>
+            
+            <!-- fin ajout -->
+
+                        
+            <url-pattern>/api/publish/*</url-pattern>
+            
+            <http-method>GET</http-method>  
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+
+        <auth-constraint>
+            <role-name>enccre-admin</role-name>
+        </auth-constraint>
+        
+    </security-constraint>    
+
+    <security-constraint>
+        <display-name>AllSecured</display-name>
+        <web-resource-collection>
+            <web-resource-name>Secured Ressources</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint/>
+    </security-constraint>
+    
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>Authentification pour l_éditeur Enccre</realm-name>
+    </login-config>
+    
+    
+    <context-param>
+        <description>Répertoire de base des réponses précalculées</description>
+        <param-name>PreRenderPath</param-name>
+        <param-value>/home/enccre/dev/projects/enccre/wsprerender_EDE/</param-value>
+    </context-param>
+    <context-param>
+        <description>Répertoire de stockage des média téléchargés</description>
+        <param-name>MediaStoragePath</param-name>
+        <param-value>/home/enccre/dev/projects/enccre/media/</param-value>
+    </context-param>
+    <context-param>
+        <description>Préfixe des URL d_où sont servis les média téléchargés</description>
+        <param-name>MediaUrlPrefix</param-name>
+        <param-value>/media/</param-value>
+    </context-param>
+    <context-param>
+        <description>Hôte ElasticSearch</description>
+        <param-name>EShost</param-name>
+        <param-value>localhost</param-value>
+    </context-param>
+        <context-param>
+        <description>Port d_écoute ElasticSearch</description>
+        <param-name>ESport</param-name>
+        <param-value>9200</param-value>
+    </context-param>
+    <context-param>
+        <description>Préfixe pour les noms d_index ElasticSearch</description>
+        <param-name>ESIndexPrefix</param-name>
+        <param-value>ede-</param-value>
+    </context-param>    
+    <context-param>
+        <description>Hôte BaseX</description>
+        <param-name>BaseXhost</param-name>
+        <param-value>localhost</param-value>
+    </context-param>
+    <context-param>
+        <description>Port d_écoute BaseX/RestXQ</description>
+        <param-name>BaseXport</param-name>
+        <param-value>8984</param-value>
+    </context-param>   
+    <context-param>
+        <description>préfixe des URL BaseX/RestXQ</description>
+        <param-name>BaseXUrlPrefix</param-name>
+        <param-value>/api/EDE</param-value>
+    </context-param>   
+    
+</web-app>
